@@ -153,7 +153,7 @@ static int8_t CDC_Init_FS(void)
 {
   /* USER CODE BEGIN 3 */
   /* Set Application Buffers */
-  USBD_CDC_SetTxBuffer(&hUsbDeviceFS, UserTxBufferFS, 0);
+  USBD_CDC_SetTxBuffer(&hUsbDeviceFS, UserTxBufferFS, 0,0);
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, UserRxBufferFS);
   return (USBD_OK);
   /* USER CODE END 3 */
@@ -289,8 +289,8 @@ uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len)
   if (hcdc->TxState != 0){
     return USBD_BUSY;
   }
-  USBD_CDC_SetTxBuffer(&hUsbDeviceFS, Buf, Len);
-  result = USBD_CDC_TransmitPacket(&hUsbDeviceFS);
+  USBD_CDC_SetTxBuffer(&hUsbDeviceFS, Buf, Len,0);
+  result = USBD_CDC_TransmitPacket(&hUsbDeviceFS,0);
   /* USER CODE END 7 */
   return result;
 }

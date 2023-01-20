@@ -27,7 +27,8 @@
 #include "usbd_cdc_if.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "usbd_msc.h"
+#include "usbd_storage_if.h"
 /* USER CODE END Includes */
 
 /* USER CODE BEGIN PV */
@@ -54,7 +55,8 @@ USBD_HandleTypeDef hUsbDeviceFS;
  * -- Insert your external function declaration here --
  */
 /* USER CODE BEGIN 1 */
-
+uint8_t cdc_ep[3]={0x81,0x1,0x82};
+uint8_t msc_ep[]={0x83,0x3};
 /* USER CODE END 1 */
 
 /**
@@ -72,14 +74,34 @@ void MX_USB_DEVICE_Init(void)
   {
     Error_Handler();
   }
-  if (USBD_RegisterClass(&hUsbDeviceFS, &USBD_CDC) != USBD_OK)
-  {
-    Error_Handler();
-  }
+
+
+//  if (USBD_RegisterClass(&hUsbDeviceFS, &USBD_CDC) != USBD_OK)
+//  {
+//    Error_Handler();
+//  }
+
+
   if (USBD_CDC_RegisterInterface(&hUsbDeviceFS, &USBD_Interface_fops_FS) != USBD_OK)
   {
     Error_Handler();
   }
+  if (USBD_RegisterClassComposite(&hUsbDeviceFS, &USBD_CDC,CLASS_TYPE_CDC,cdc_ep) != USBD_OK)
+  {
+    Error_Handler();
+  }
+
+  if (USBD_MSC_RegisterStorage(&hUsbDeviceFS, &USBD_Storage_Interface_fops_FS) != USBD_OK)
+  {
+    Error_Handler();
+  }
+  if (USBD_RegisterClassComposite(&hUsbDeviceFS, &USBD_MSC,CLASS_TYPE_MSC,msc_ep) != USBD_OK)
+  {
+    Error_Handler();
+  }
+
+
+
   if (USBD_Start(&hUsbDeviceFS) != USBD_OK)
   {
     Error_Handler();

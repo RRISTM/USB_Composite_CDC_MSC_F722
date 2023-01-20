@@ -67,8 +67,8 @@
 #define USBD_MANUFACTURER_STRING     "STMicroelectronics"
 #define USBD_PID_FS     22363
 #define USBD_PRODUCT_STRING_FS     "STM32 COMPOSITE cdc msc"
-#define USBD_CONFIGURATION_STRING_FS     "cOMPOSITE Config"
-#define USBD_INTERFACE_STRING_FS     "cOMPOSITE Interface"
+#define USBD_CONFIGURATION_STRING_FS     "COMPOSITE Config"
+#define USBD_INTERFACE_STRING_FS     "COMPOSITE Interface"
 
 #define USB_SIZ_BOS_DESC            0x0C
 
